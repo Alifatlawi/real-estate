@@ -1,19 +1,23 @@
-import React from 'react';
-
-// import houseData
+import React, { useState } from 'react';
+// Import house data
 import { housesData } from '../data';
-//  useParams
+// useParams
 import { useParams } from 'react-router-dom';
-// import icons
-import { BiBed, BiBath, BiArea, BiPhone } from 'react-icons/bi';
-// import link
-import { Link } from 'react-router-dom';
+// Import icons
+import { BiBed, BiBath, BiArea } from 'react-icons/bi';
 
 const PropertyDetails = () => {
   const { id } = useParams();
-  const property = housesData.find((house) => {
-    return house.id === parseInt(id);
-  });
+  const property = housesData.find((house) => house.id === parseInt(id));
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % property.images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + property.images.length) % property.images.length);
+  };
 
   return (
     <div className='container mx-auto min-h-[800px] mb-14'>
@@ -31,13 +35,19 @@ const PropertyDetails = () => {
           </div>
         </div>
         <div className='text-3xl font-semibold text-violet-600'>
-          $ {property.price}
+          {property.price}
         </div>
       </div>
       <div className='flex flex-col items-start gap-8 lg:flex-row'>
         <div className='max-w-[768px]'>
-          <div className='mb-8'>
-            <img src={property.imageLg} alt='' />
+          <div className='mb-8 relative'>
+            <img src={property.images[currentImageIndex]} alt={`${property.name} ${currentImageIndex + 1}`} className='mb-4' />
+            <button onClick={prevImage} className='absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 p-2 rounded-full'>
+              &#8249;
+            </button>
+            <button onClick={nextImage} className='absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 p-2 rounded-full'>
+              &#8250;
+            </button>
           </div>
           <div className='flex gap-x-6 text-violet-700 mb-6'>
             <div className='flex gap-x-2 items-center'>
@@ -56,51 +66,16 @@ const PropertyDetails = () => {
           <p>{property.description}</p>
         </div>
         <div className='flex-1 w-full mb-8 bg-white border border-gray-300 rounded-lg px-6 py-8'>
-          <div className='flex items-center gap-x-4 mb-8'>
-            <div className='w-20 h-20 p-1 border border-gray-300 rounded-full'>
-              <img src={property.agent.image}></img>
-            </div>
-            <div>
-              <div className='font-bold text-lg'>{property.agent.name}</div>
-              <Link to='' className='text-violet-700 text-sm'>
-                View listings
-              </Link>
-            </div>
+          <div>
+            <p>المدينة: {property.country}</p>
+            <p>المنطقة: {property.address}</p>
+            <p>الوكيل: {property.agent.name}</p>
+            <p>عدد الغرف: {property.bedrooms}</p>
+            <p>عدد الحمامات: {property.bathrooms}</p>
+            <p>المساحة: {property.surface}</p>
+            <p>الحالة: {property.description}</p>
+            <p>السعر: {property.price} ({property.usd_equivalent})</p>
           </div>
-          <form className='flex flex-col gap-y-4'>
-            <input
-              className='border border-gray-300 focus:border-violet-700 rounded w-full px-4 h-14 text-sm outline-none'
-              type='text'
-              placeholder='Name*'
-            />
-            <input
-              className='border border-gray-300 focus:border-violet-700 rounded w-full px-4 h-14 text-sm outline-none'
-              type='text'
-              placeholder='Email*'
-            />
-            <input
-              className='border border-gray-300 focus:border-violet-700 rounded w-full px-4 h-14 text-sm outline-none'
-              type='text'
-              placeholder='Phone*'
-            />
-            <textarea
-              className='border border-gray-300 focus:border-violet-700 rounded w-full p-4 h-36 text-sm text-gray-400 outline-none resize-none'
-              type='text'
-              placeholder='Message*'
-              defaultValue='Hello, I am interested in [Modern apartment]'
-            />
-            <div className='flex gap-x-2'>
-              <button
-                className='bg-violet-700 hover:bg-violet-800 text-white rounded p-4 text-sm w-full transition'
-                type='submit'
-              >
-                Send message
-              </button>
-              <button className='border border-violet-700 text-violet-700 hover:border-purple-600 hover:text-purple-600 rounded p-4 text-sm w-full transition'>
-                Call
-              </button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
