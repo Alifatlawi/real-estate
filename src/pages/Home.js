@@ -6,9 +6,11 @@ import Banner from '../components/Banner';
 
 const Home = () => {
   return (
-    <div className='min-h-[1800px]'>
+    <div className='min-h-screen'>
       <Banner />
-      <HouseList />
+      <div className='container mx-auto px-4 py-8 mt-8'>
+        <HouseList />
+      </div>
     </div>
   );
 };

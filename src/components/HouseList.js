@@ -14,7 +14,9 @@ const HouseList = () => {
 
   if (loading) {
     return (
-      <ImSpinner2 className='mx-auto animate-spin text-violet-700 text-4xl mt-[200px]' />
+      <div className='flex justify-center items-center h-[calc(100vh-640px)]'>
+        <ImSpinner2 className='animate-spin text-violet-700 text-6xl' />
+      </div>
     );
   }
 
@@ -27,9 +29,9 @@ const HouseList = () => {
   }
 
   return (
-    <section className='mb-20'>
+    <section className='house-list-section mb-20'>
       <div className='container mx-auto'>
-        <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-14'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10'>
           {houses.map((house, index) => {
             return (
               <Link to={`/property/${house.id}`} key={index}>

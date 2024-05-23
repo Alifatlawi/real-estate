@@ -21,4 +21,14 @@
   .dropdown-menu {
     @apply px-6 py-8 text-[15px] space-y-6 shadow-md bg-white absolute w-full z-10 list-none rounded-b-lg;
   }
+  .banner-section {
+    @apply mb-8 xl:mb-24 bg-gradient-to-r from-blue-50 to-indigo-100;
+  }
+  .house-list-section {
+    @apply mt-8;
+  }
+
+  .banner-section {
+    padding-top: 20px;
+  }
 }

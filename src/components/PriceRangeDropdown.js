@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-
+import React, { useState, useContext } from 'react';
 // import icons
 import {
   RiWallet3Line,
@@ -16,27 +15,13 @@ const PriceRangeDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const prices = [
-    {
-      value: 'Price range (any)',
-    },
-    {
-      value: '100000 - 130000',
-    },
-    {
-      value: '130000 - 160000',
-    },
-    {
-      value: '160000 - 190000',
-    },
-    {
-      value: '190000 - 220000',
-    },
-    {
-      value: '20000 - 30000',
-    },
-    {
-      value: '30000 - 40000',
-    },
+    'Price range (any)',
+    '100000 - 130000',
+    '130000 - 160000',
+    '160000 - 190000',
+    '190000 - 220000',
+    '20000 - 30000',
+    '30000 - 40000',
   ];
 
   return (
@@ -58,18 +43,16 @@ const PriceRangeDropdown = () => {
       </Menu.Button>
 
       <Menu.Items className='dropdown-menu'>
-        {prices.map((price, index) => {
-          return (
-            <Menu.Item
-              as='li'
-              onClick={() => setPrice(price.value)}
-              key={index}
-              className='cursor-pointer hover:text-violet-700 transition'
-            >
-              {price.value}
-            </Menu.Item>
-          );
-        })}
+        {prices.map((priceValue, index) => (
+          <Menu.Item
+            as='li'
+            onClick={() => setPrice(priceValue)}
+            key={index}
+            className='cursor-pointer hover:text-violet-700 transition'
+          >
+            {priceValue}
+          </Menu.Item>
+        ))}
       </Menu.Items>
     </Menu>
   );

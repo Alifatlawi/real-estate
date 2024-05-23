@@ -439,6 +439,8 @@
 // Import new images
 import Image1 from './assets/img/houses/h1.png';
 import Image2 from './assets/img/houses/h2.png';
+import image11 from './assets/img/houses/image11.png'
+import image12 from './assets/img/houses/image12.png'
 
 // New data
 export const housesData = [
@@ -457,11 +459,26 @@ export const housesData = [
     price: '3,250,000 ليرة تركي',
     usd_equivalent: '101,500 $',
     negotiable: true,
-    agent: {
-      image: './assets/img/agents/agent1.png',
-      name: 'فيريدون جيلك',
-      phone: '0123 456 78910',
-    },
   },
-  // Add more entries if needed
+
+  {
+    id: 2,
+    type: 'Apartment',
+    name: 'Rust/5',
+    description: 'ديلوكس جديدة (غير مستعملة)',
+    images: [image11, image12],
+    country: 'تركيا',
+    address: 'كيجوران: اتابارك، أنقرة',
+    bedrooms: '3+1',
+    bathrooms: '3',
+    surface: '120 m²',
+    year: '2023',
+    price: '2,640,000 ليرة تركي',
+    usd_equivalent: '82,500 $',
+    negotiable: true,
+    floor: '1',
+    orientation: 'جنوبي غربي'
+  },
+
+ 
 ];

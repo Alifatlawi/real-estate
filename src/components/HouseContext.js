@@ -16,58 +16,34 @@ const HouseContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const allCountries = houses.map((house) => house.country);
-    const uniqueCountries = ['اختر مكانك', ...new Set(allCountries)];
+    const uniqueCountries = ['اختر مكانك', ...new Set(houses.map((house) => house.country))];
     setCountries(uniqueCountries);
   }, [houses]);
 
   useEffect(() => {
-    const allProperties = houses.map((house) => house.type);
-    const uniqueProperties = ['نوع العقار (أي)', ...new Set(allProperties)];
+    const uniqueProperties = ['نوع العقار (أي)', ...new Set(houses.map((house) => house.type))];
     setProperties(uniqueProperties);
   }, [houses]);
 
   const handleClick = () => {
     setLoading(true);
+
     const isDefault = (str) => str.includes('(أي)');
-    const minPrice = parseInt(price.split(' ')[0]);
-    const maxPrice = parseInt(price.split(' ')[2]);
+    const [minPrice, maxPrice] = price.split(' - ').map(p => parseInt(p.replace(/,/g, ''), 10));
 
     const newHouses = housesData.filter((house) => {
-      const housePrice = parseInt(house.price.replace(/,/g, ''));
-      if (
-        house.country === country &&
-        house.type === property &&
-        housePrice >= minPrice &&
-        housePrice <= maxPrice
-      ) {
-        return house;
-      }
-      if (isDefault(country) && isDefault(property) && isDefault(price)) {
-        return house;
-      }
-      if (!isDefault(country) && isDefault(property) && isDefault(price)) {
-        return house.country === country;
-      }
-      if (!isDefault(property) && isDefault(country) && isDefault(price)) {
-        return house.type === property;
-      }
-      if (!isDefault(price) && isDefault(country) && isDefault(property)) {
-        return housePrice >= minPrice && housePrice <= maxPrice;
-      }
-      if (!isDefault(country) && !isDefault(property) && isDefault(price)) {
-        return house.country === country && house.type === property;
-      }
-      if (!isDefault(country) && isDefault(property) && !isDefault(price)) {
-        return house.country === country && housePrice >= minPrice && housePrice <= maxPrice;
-      }
-      if (isDefault(country) && !isDefault(property) && !isDefault(price)) {
-        return house.type === property && housePrice >= minPrice && housePrice <= maxPrice;
-      }
+      const housePrice = parseInt(house.price.replace(/,/g, ''), 10);
+
+      if (isDefault(country) && isDefault(property) && isDefault(price)) return true;
+      if (!isDefault(country) && house.country !== country) return false;
+      if (!isDefault(property) && house.type !== property) return false;
+      if (!isDefault(price) && (housePrice < minPrice || housePrice > maxPrice)) return false;
+
+      return true;
     });
 
     setTimeout(() => {
-      setHouses(newHouses.length < 1 ? [] : newHouses);
+      setHouses(newHouses);
       setLoading(false);
     }, 1000);
   };
